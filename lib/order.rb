@@ -1,14 +1,17 @@
+require_relative "../lib/menu.rb"
+
 class Order
 
-  def initialize(io)
+  def initialize(io, menu)
     @io = io
-    @order = []
-    @positions = ["1","2","3"]
+    @order = {}
+    @menu = menu
   end
 
   def run
     print_instructions
     collect
+    puts total
   end
 
   def print_instructions
@@ -23,10 +26,10 @@ class Order
 
     while !item.empty? do
       @io.puts "Enter quantity to order:"
-      quantity = @io.gets.chomp
+      quantity = @io.gets.chomp.to_i
       
-      if @positions.include?(item)
-        @order << {item: item, quantity: quantity}
+      if ["1","2","3"].include?(item)
+        add_item(item, quantity)
       else
         @io.puts "Invalid selection, please enter the dish available on the menu:"
       end
@@ -36,19 +39,36 @@ class Order
     end
   end
 
+  def add_item(item, quantity)
+    if @order.has_key?(item)
+      @order[item] += quantity
+    else
+      @order[item] = quantity
+    end
+  end
+
   def total
     @order
   end
 end
 
-# order = Order.new(Kernel)
-# order.run
+menu = Menu.new(Kernel)
+order = Order.new(Kernel, menu)
+order.run
 
-# Something not working here
-# @order.map { |position| 
-# if position[:item] == item
-#   position[:quantity] += 1
-# else 
-#   @order << {item: item, quantity: 1}
-# end
+# Change the order of collect method to give Invalid message straigh after
+# selection is invalid (and not after quantity prompt)
+
+# Need to sum repeating items!
+# And then print with names and quantity
+
+# e.g. my array of hashes =
+# [{:item=>"2", :quantity=>"3"} => p0
+# {:item=>"1", :quantity=>"2"} => p1
+# {:item=>"1", :quantity=>"3"}] => p2
+
+# menu.items = {
+#   "Adjaruli Khachapuri" => 10.50,
+#   "Khinkali" => 12,
+#   "Badrijani" => 7.50
 # }

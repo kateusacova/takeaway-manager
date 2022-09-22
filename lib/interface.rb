@@ -1,7 +1,7 @@
 require_relative "../lib/menu.rb"
 
 class UserInterface
-  def initialize(io, menu)
+  def initialize(io, menu) #
     @io = io
     @menu = menu
   end

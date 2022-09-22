@@ -20,5 +20,9 @@ class Menu
   end
 end
 
+def items
+  @menu
+end
+
 # menu = Menu.new(Kernel)
 # menu.display
