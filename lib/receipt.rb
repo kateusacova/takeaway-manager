@@ -15,16 +15,21 @@ class Receipt
     formatted_receipt if !@order.items.empty?
   end
 
-  def summarise
+  def adding_items
     @order.items.each { |k, v| 
     @summary <<  {item: k, quantity: v, price: 0, total_price: 0}
     }
+  end
+
+  def summarise
+    adding_items
     @summary.map { |position| 
-      if position[:item] == "Adjaruli Khachapuri"
+      case position[:item]
+      when "Adjaruli Khachapuri"
         position[:price] = 10.50
-      elsif position[:item] == "Khinkali"
+      when "Khinkali"
         position[:price] = 12.00
-      elsif position[:item] == "Badrijani"
+      when "Badrijani"
         position[:price] = 7.50
       end
       position[:total_price] = position[:price] * position[:quantity]
