@@ -5,7 +5,7 @@ class Menu
     @io = io
     @menu = {
       "Adjaruli Khachapuri" => 10.50,
-      "Khinkali" => 12,
+      "Khinkali" => 12.00,
       "Badrijani" => 7.50
     }
   end
